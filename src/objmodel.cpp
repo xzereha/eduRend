@@ -1,4 +1,14 @@
 #include "OBJModel.h"
+#include "objloader.h"
+#include <iostream>
+
+#define SAFE_RELEASE(x) if( x ) { (x)->Release(); (x) = nullptr; }
+#define SAFE_DELETE(x) if( x ) { delete(x); (x) = nullptr; }
+#ifdef _DEBUG
+#define SETNAME(object, name) object->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof(name) - 1, name)
+#else
+#define SETNAME(object, name) (void)0
+#endif
 
 OBJModel::OBJModel(
 	const std::string& objfile,

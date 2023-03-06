@@ -1,16 +1,11 @@
-/**
- * @file buffers.h
- * @brief Contains constant buffers
-*/
+export module Buffers;
 
-#pragma once
-
-#include "vec/mat.h"
+import Math;
 
 /**
  * @brief Contains transformation matrices.
 */
-struct TransformationBuffer
+export struct TransformationBuffer
 {
 	linalg::mat4f ModelToWorldMatrix; //!< Matrix for converting from object space to world space.
 	linalg::mat4f WorldToViewMatrix; //!< Matrix for converting from world space to view space.

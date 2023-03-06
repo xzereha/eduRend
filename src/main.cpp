@@ -18,11 +18,11 @@
 
 #include "stdafx.h"
 #include "shader.h"
-#include "Window.h"
-#include "InputHandler.h"
-#include "Camera.h"
-#include "Model.h"
 #include "Scene.h"
+
+import Camera;
+import Inputhandler;
+import Window;
 
 //--------------------------------------------------------------------------------------
 // Global Variables

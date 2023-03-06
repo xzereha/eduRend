@@ -4,10 +4,12 @@
  * @brief Contains the class Window that handles windowing functionality for the WIN32 platform.
  * @copyright MIT License.
  */
-
-#pragma once
-#include "stdafx.h"
-#include "vec/vec.h"
+module;
+#include <Windows.h>
+#include <windowsx.h>
+export module Window;
+import Math;
+import <cstdint>;
 
 /**
  * @brief Hold the upper and lower corner coordinates of a rectangle.
@@ -34,7 +36,7 @@ struct Rect
 /**
  * @brief Handles creation, callbacks, and resizing of a WIN32 window.
 */
-class Window
+export class Window
 {
 public:
 	/**

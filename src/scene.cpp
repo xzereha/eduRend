@@ -1,7 +1,9 @@
 
 #include "Scene.h"
-#include "QuadModel.h"
 #include "OBJModel.h"
+#include <iostream>
+
+import QuadModel;
 
 Scene::Scene(
 	ID3D11Device* dxdevice,
@@ -39,7 +41,7 @@ OurTestScene::OurTestScene(
 void OurTestScene::Init()
 {
 	m_camera = new Camera(
-		45.0f * fTO_RAD,		// field-of-view (radians)
+		45.0f * linalg::fTO_RAD,		// field-of-view (radians)
 		(float)m_window_width / m_window_height,	// aspect ratio
 		1.0f,					// z-near plane (everything closer will be clipped/removed)
 		500.0f);				// z-far plane (everything further will be clipped/removed)
@@ -77,14 +79,14 @@ void OurTestScene::Update(
 	// via e.g. Mquad = linalg::mat4f_identity; 
 
 	// Quad model-to-world transformation
-	m_quad_transform = mat4f::translation(0, 0, 0) *			// No translation
-		mat4f::rotation(-m_angle, 0.0f, 1.0f, 0.0f) *	// Rotate continuously around the y-axis
-		mat4f::scaling(1.5, 1.5, 1.5);				// Scale uniformly to 150%
+	m_quad_transform = linalg::mat4f::translation(0, 0, 0) *			// No translation
+		linalg::mat4f::rotation(-m_angle, 0.0f, 1.0f, 0.0f) *	// Rotate continuously around the y-axis
+		linalg::mat4f::scaling(1.5, 1.5, 1.5);				// Scale uniformly to 150%
 
 	// Sponza model-to-world transformation
-	m_sponza_transform = mat4f::translation(0, -5, 0) *		 // Move down 5 units
-		mat4f::rotation(fPI / 2, 0.0f, 1.0f, 0.0f) * // Rotate pi/2 radians (90 degrees) around y
-		mat4f::scaling(0.05f);						 // The scene is quite large so scale it down to 5%
+	m_sponza_transform = linalg::mat4f::translation(0, -5, 0) *		 // Move down 5 units
+		linalg::mat4f::rotation(linalg::fPI / 2, 0.0f, 1.0f, 0.0f) * // Rotate pi/2 radians (90 degrees) around y
+		linalg::mat4f::scaling(1.0f);						 // The scene is quite large so scale it down to 5%
 
 	// Increment the rotation angle.
 	m_angle += m_angular_velocity * dt;
@@ -154,9 +156,9 @@ void OurTestScene::InitTransformationBuffer()
 }
 
 void OurTestScene::UpdateTransformationBuffer(
-	mat4f ModelToWorldMatrix,
-	mat4f WorldToViewMatrix,
-	mat4f ProjectionMatrix)
+	linalg::mat4f ModelToWorldMatrix,
+	linalg::mat4f WorldToViewMatrix,
+	linalg::mat4f ProjectionMatrix)
 {
 	// Map the resource buffer, obtain a pointer and then write our matrices to it
 	D3D11_MAPPED_SUBRESOURCE resource;

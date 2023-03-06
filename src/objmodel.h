@@ -5,7 +5,9 @@
 */
 
 #pragma once
-#include "Model.h"
+#include <vector>
+import Drawcall;
+import Model;
 
 /**
  * @brief Model representing a 3D object.

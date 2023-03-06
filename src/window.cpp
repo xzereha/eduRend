@@ -3,9 +3,10 @@
 //
 // Written by Oliver Öhrström
 //
-
-#include "Window.h"
+module;
+#include <Windows.h>
 #include <windowsx.h>
+module Window;
 
 Window* Window::s_instance = nullptr;
 

@@ -6,7 +6,7 @@
 //
 
 #include "mat.h"
-#include "vec.h"
+import Math;
 
 namespace linalg
 {

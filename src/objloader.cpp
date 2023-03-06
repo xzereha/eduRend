@@ -7,8 +7,9 @@
 
 #include <fstream>
 #include <algorithm>
+#include <iostream>
 #include "OBJLoader.h"
-#include "vec/vec.h"
+import Math;
 #include "parseutil.h"
 
 using namespace linalg;

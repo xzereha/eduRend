@@ -92,6 +92,8 @@
       <ExternalWarningLevel>Level2</ExternalWarningLevel>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,6 +112,8 @@
       <ExternalWarningLevel>Level2</ExternalWarningLevel>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,6 +133,8 @@
       <ExternalWarningLevel>Level2</ExternalWarningLevel>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,6 +154,8 @@
       <ExternalWarningLevel>Level2</ExternalWarningLevel>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,37 +166,40 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="lib\stb_image.h" />
-    <ClInclude Include="src\buffers.h" />
     <ClInclude Include="src\objmodel.h" />
-    <ClInclude Include="src\quadmodel.h" />
-    <ClInclude Include="src\camera.h" />
-    <ClInclude Include="src\drawcall.h" />
-    <ClInclude Include="src\model.h" />
-    <ClInclude Include="src\inputhandler.h" />
     <ClInclude Include="src\objloader.h" />
     <ClInclude Include="src\parseutil.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\stdafx.h" />
-    <ClInclude Include="src\texture.h" />
-    <ClInclude Include="src\vec\mat.h" />
-    <ClInclude Include="src\vec\math.h" />
-    <ClInclude Include="src\vec\vec.h" />
-    <ClInclude Include="src\window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\inputhandler.cpp" />
+    <ClCompile Include="src\quadmodel.ixx" />
+    <ClCompile Include="src\math\algorithms.ixx" />
+    <ClCompile Include="src\buffers.ixx" />
+    <ClCompile Include="src\camera.ixx" />
+    <ClCompile Include="src\drawcall.ixx" />
+    <ClCompile Include="src\inputhandler.ixx" />
+    <ClCompile Include="src\math\mat2.ixx" />
+    <ClCompile Include="src\math\mat3.ixx" />
+    <ClCompile Include="src\math\mat4.ixx" />
+    <ClCompile Include="src\drawcall\material.ixx" />
+    <ClCompile Include="src\math.ixx" />
+    <ClCompile Include="src\model.ixx" />
+    <ClCompile Include="src\drawcall\shapes.ixx" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objloader.cpp" />
     <ClCompile Include="src\objmodel.cpp" />
-    <ClCompile Include="src\quadmodel.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\shader.c" />
-    <ClCompile Include="src\texture.cpp" />
-    <ClCompile Include="src\vec\mat.cpp" />
-    <ClCompile Include="src\vec\vec.cpp" />
     <ClCompile Include="src\window.cpp" />
+    <ClCompile Include="src\texture.ixx" />
+    <ClCompile Include="src\math\types.ixx" />
+    <ClCompile Include="src\math\vec2.ixx" />
+    <ClCompile Include="src\math\vec3.ixx" />
+    <ClCompile Include="src\math\vec4.ixx" />
+    <ClCompile Include="src\drawcall\vertex.ixx" />
+    <ClCompile Include="src\window.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\pixel_shader.hlsl" />

@@ -9,7 +9,7 @@
 
 #include <vector>
 #include <string>
-#include "Drawcall.h"
+import Drawcall;
 
 //! Make sure loaded normals face in the same direction as the triangle's CCW normal
 #define MESH_FORCE_CCW

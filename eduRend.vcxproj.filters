@@ -17,20 +17,14 @@
       <UniqueIdentifier>{bdc29781-2bdb-498d-83f5-a7e72559dfa1}</UniqueIdentifier>
       <Extensions>ps;vs</Extensions>
     </Filter>
+    <Filter Include="Source Files\MathInternals">
+      <UniqueIdentifier>{82d330ad-b15b-4c4d-b26c-0332ed5184a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DrawcallInternals">
+      <UniqueIdentifier>{7eacd30f-b378-4c12-b842-a666ebb588d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\drawcall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\inputhandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\objloader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,22 +37,7 @@
     <ClInclude Include="src\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\vec\mat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\vec\math.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\vec\vec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lib\stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\shader.h">
@@ -67,17 +46,8 @@
     <ClInclude Include="src\objmodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\quadmodel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\buffers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\inputhandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,25 +60,70 @@
     <ClCompile Include="src\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\vec\mat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vec\vec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\shader.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\objmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\quadmodel.cpp">
+    <ClCompile Include="src\math.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawcall.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\buffers.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\inputhandler.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\mat2.ixx">
+      <Filter>Source Files\MathInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\mat3.ixx">
+      <Filter>Source Files\MathInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\mat4.ixx">
+      <Filter>Source Files\MathInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\algorithms.ixx">
+      <Filter>Source Files\MathInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec4.ixx">
+      <Filter>Source Files\MathInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec2.ixx">
+      <Filter>Source Files\MathInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec3.ixx">
+      <Filter>Source Files\MathInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\types.ixx">
+      <Filter>Source Files\MathInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawcall\material.ixx">
+      <Filter>Source Files\DrawcallInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawcall\vertex.ixx">
+      <Filter>Source Files\DrawcallInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawcall\shapes.ixx">
+      <Filter>Source Files\DrawcallInternals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\quadmodel.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,41 +1,54 @@
-//
-// Texture loaders
-// Adapted from:
-// https://github-wiki-see.page/m/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples
-//
-
-#include "Texture.h"
-
+/**
+ * @file texture.ixx
+ * @brief Texture loaders
+ * @details Adapted from: https://github-wiki-see.page/m/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples
+*/
+module;
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include <d3d11.h>
+export module Texture;
 
-HRESULT LoadTextureFromFile(
-    ID3D11Device* dxdevice,
-    const char* filename,
-    Texture* texture_out)
+#ifdef _DEBUG
+#define SETNAME(object, name) object->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof(name) - 1, name)
+#else
+#define SETNAME(object, name) (void)0
+#endif
+
+/**
+ * @brief Represents a texture.
+*/
+export struct Texture
 {
-    return LoadTextureFromFile(
-        dxdevice,
-        nullptr,
-        filename,
-        texture_out);
-}
+	int Width = 0; //!< Width if the Texture in pixels
+	int Weight = 0; //!< Height of the Texture in pixels
+	ID3D11ShaderResourceView* TextureView = nullptr; //!< Shader Resource View pointing to the GPU texture.
 
-HRESULT LoadTextureFromFile(
-    ID3D11Device* dxdevice,
-    ID3D11DeviceContext* dxdevice_context,
-    const char* filename,
-    Texture* texture_out)
+	/**
+	 * @brief Allow cast to bool ("invariant") to see if this is a valid texture
+	*/
+	operator bool() { return (bool)TextureView && Width && Weight; }
+};
+
+/**
+ * @brief Loads a 2D texture from file.
+ * @param[in] dxdevice Valid ID3D11Device device.
+ * @param[in] dxdevice_context If provided the ID3D11DeviceContext will be used to auto generate mip maps for the texture.
+ * @param[in] filename File path to a valid image.
+ * @param[out] texture_out Texture struct to store the resulting texture in.
+ * @return HRESULT of the texture creation.
+*/
+export HRESULT LoadTextureFromFile(ID3D11Device* dxdevice, ID3D11DeviceContext* dxdevice_context, const char* filename, Texture* texture_out)
 {
     int mipLevels = 1;
     int mipLevelsSRV = 1;
     unsigned bindFlags = D3D11_BIND_SHADER_RESOURCE;
     unsigned miscFlags = 0;
     int mostDetailedMip = 0;
-    
+
     bool useMipMap = (bool)dxdevice_context;
     // Generate mip hierarchy if a m_dxdevice_context is provided
-    if (useMipMap)
+    if(useMipMap)
     {
         mipLevels = 0;
         mipLevelsSRV = -1;
@@ -51,7 +64,7 @@ HRESULT LoadTextureFromFile(
     int imageWidth = 0;
     int imageHeight = 0;
     unsigned char* imageData = stbi_load(filename, &imageWidth, &imageHeight, NULL, 4);
-    if (imageData == nullptr)
+    if(imageData == nullptr)
     {
         return E_FAIL;
     }
@@ -75,8 +88,8 @@ HRESULT LoadTextureFromFile(
     subResource.SysMemPitch = desc.Width * 4;
     subResource.SysMemSlicePitch = 0;
     D3D11_SUBRESOURCE_DATA* subResourcePtr = &subResource;
-    if (useMipMap) subResourcePtr = nullptr;
-    if (FAILED(hr = dxdevice->CreateTexture2D(
+    if(useMipMap) subResourcePtr = nullptr;
+    if(FAILED(hr = dxdevice->CreateTexture2D(
         &desc,
         subResourcePtr,
         &pTexture)))
@@ -85,7 +98,7 @@ HRESULT LoadTextureFromFile(
     }
     SETNAME(pTexture, "TextureData");
 
-    if (useMipMap)
+    if(useMipMap)
         dxdevice_context->UpdateSubresource(
             pTexture,
             0,
@@ -101,7 +114,7 @@ HRESULT LoadTextureFromFile(
 
     srvDesc.Texture2D.MostDetailedMip = 0;
     srvDesc.Texture2D.MipLevels = mipLevelsSRV;
-    if (FAILED(hr = dxdevice->CreateShaderResourceView(
+    if(FAILED(hr = dxdevice->CreateShaderResourceView(
         pTexture,
         &srvDesc,
         &texture_out->TextureView)))
@@ -110,7 +123,7 @@ HRESULT LoadTextureFromFile(
     }
     SETNAME((texture_out->TextureView), "TextureSRV");
 
-    if (useMipMap)
+    if(useMipMap)
         dxdevice_context->GenerateMips(texture_out->TextureView);
 
     // Cleanup
@@ -123,10 +136,27 @@ HRESULT LoadTextureFromFile(
     return S_OK;
 }
 
-HRESULT LoadCubeTextureFromFile(
-    ID3D11Device* dxdevice,
-    const char** filenames,
-    Texture* texture_out)
+/**
+ * @brief Loads a 2D texture from file.
+ * @details Calls LoadTextureFromFile(ID3D11Device*,ID3D11DeviceContext*,const char*,Texture*) for the actual work.
+ * @param[in] dxdevice Valid ID3D11Device device.
+ * @param[in] filename File path to a valid image.
+ * @param[out] texture_out Texture struct to store the resulting texture in.
+ * @return HRESULT of the texture creation.
+*/
+export inline HRESULT LoadTextureFromFile(ID3D11Device* dxdevice, const char* filename, Texture* texture_out)
+{
+    return LoadTextureFromFile(dxdevice, nullptr, filename, texture_out);
+}
+
+/**
+ * @brief Loads a 3D texture from 6 individual images.
+ * @param[in] dxdevice Valid ID3D11Device device.
+ * @param[in] filenames A List of 6 file paths to valid images.
+ * @param[out] texture_out Texture struct to store the resulting texture in.
+ * @return HRESULT of the texture creation.
+*/
+export HRESULT LoadCubeTextureFromFile(ID3D11Device* dxdevice, const char** filenames, Texture* texture_out)
 {
     HRESULT hr;
 
@@ -135,10 +165,10 @@ HRESULT LoadCubeTextureFromFile(
     int imageWidth = 0;
     int imageHeight = 0;
     unsigned char* imageData[6];
-    for (int i = 0; i < 6; i++)
+    for(int i = 0; i < 6; i++)
     {
         imageData[i] = stbi_load(filenames[i], &imageWidth, &imageHeight, NULL, 4);
-        if (imageData[i] == nullptr)
+        if(imageData[i] == nullptr)
         {
             return E_FAIL;
         }
@@ -159,13 +189,13 @@ HRESULT LoadCubeTextureFromFile(
 
     ID3D11Texture2D* pTexture = NULL;
     D3D11_SUBRESOURCE_DATA subResource[6];
-    for (int i = 0; i < 6; i++)
+    for(int i = 0; i < 6; i++)
     {
         subResource[i].pSysMem = imageData[i];
         subResource[i].SysMemPitch = imageWidth * 4;
         subResource[i].SysMemSlicePitch = 0;
     }
-    if (FAILED(hr = dxdevice->CreateTexture2D(&desc, &subResource[0], &pTexture)))
+    if(FAILED(hr = dxdevice->CreateTexture2D(&desc, &subResource[0], &pTexture)))
     {
         return hr;
     }
@@ -177,8 +207,8 @@ HRESULT LoadCubeTextureFromFile(
     srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
     srvDesc.Texture2D.MipLevels = desc.MipLevels;
     srvDesc.Texture2D.MostDetailedMip = 0;
-    if (FAILED(hr = dxdevice->CreateShaderResourceView(
-        pTexture, 
+    if(FAILED(hr = dxdevice->CreateShaderResourceView(
+        pTexture,
         &srvDesc,
         &texture_out->TextureView)))
     {
@@ -188,7 +218,7 @@ HRESULT LoadCubeTextureFromFile(
 
     // Cleanup
     pTexture->Release();
-    for (int i = 0; i < 6; i++)
+    for(int i = 0; i < 6; i++)
         stbi_image_free(imageData[i]);
 
     // Done

@@ -1,19 +1,10 @@
-/**
- * @file camera.h
- * @brief Basic camera class
-*/
-
-#pragma once
-#ifndef CAMERA_H
-#define CAMERA_H
-
-#include "vec\vec.h"
-#include "vec\mat.h"
+export module Camera;
+import Math;
 
 /**
  * @brief Manages camera data, also handles generation of view and projection matrices.
 */
-class Camera
+export class Camera
 {
 public:
 	/**
@@ -23,40 +14,64 @@ public:
 	 * @param[in] near_plane Near plane distance.
 	 * @param[in] far_plane Far plane distance, must be larger than the near plane.
 	*/
-	inline constexpr Camera(float vertical_fov, float aspect_ratio, float near_plane, float far_plane) noexcept 
-		: m_vertical_fov(vertical_fov), m_aspect_ratio(aspect_ratio), m_near_plane(near_plane), m_far_plane(far_plane), m_position(0.0f) {}
+	inline constexpr Camera(float vertical_fov, float aspect_ratio, float near_plane, float far_plane) noexcept
+		: m_vertical_fov(vertical_fov), m_aspect_ratio(aspect_ratio), m_near_plane(near_plane), m_far_plane(far_plane), m_position(0.0f)
+	{
+	}
 
 	/**
 	 * @brief Move the camera to a new position
 	 * @param[in] position New position for the camera
 	*/
-	void MoveTo(const linalg::vec3f& position) noexcept;
+	void MoveTo(const linalg::vec3f& position) noexcept
+	{
+		m_position = position;
+	}
 
 	/**
 	 * @brief Move the camera along a vector
 	 * @param[in] direction Direction to move along
 	*/
-	void Move(const linalg::vec3f& direction) noexcept;
+	void Move(const linalg::vec3f& direction) noexcept
+	{
+		m_position += direction;
+	}
 
 	/**
 	 * @brief Changes the camera aspect ratio.
 	 * @param[in] aspect_ratio New aspect ratio, calculate with width / height
 	*/
-	inline void SetAspect(float aspect_ratio) noexcept { m_aspect_ratio = aspect_ratio; }
+	inline void SetAspect(float aspect_ratio) noexcept 
+	{ 
+		m_aspect_ratio = aspect_ratio; 
+	}
 
 	/**
 	 * @brief Get the World-to-View matrix of the camera.
 	 * @return World-to-View matrix.
 	*/
-	linalg::mat4f WorldToViewMatrix() const noexcept;
+	linalg::mat4f WorldToViewMatrix() const noexcept
+	{
+		// Assuming a camera's position and rotation is defined by matrices T(p) and R,
+		// the View-to-World transform is T(p)*R (for a first-person style camera).
+		//
+		// World-to-View then is the inverse of T(p)*R;
+		//		inverse(T(p)*R) = inverse(R)*inverse(T(p)) = transpose(R)*T(-p)
+		// Since now there is no rotation, this matrix is simply T(-p)
+
+		return linalg::mat4f::translation(-m_position);
+	}
 
 	/**
 	 * @brief get the Matrix transforming from View space to Clip space
 	 * @return Projection matrix.
-	 * 
+	 *
 	 * @note In a performance sensitive situation this matrix should be precomputed if possible
 	*/
-	linalg::mat4f ProjectionMatrix() const noexcept;
+	linalg::mat4f ProjectionMatrix() const noexcept
+	{
+		return linalg::mat4f::projection(m_vertical_fov, m_aspect_ratio, m_near_plane, m_far_plane);
+	}
 
 private:
 	// Aperture attributes
@@ -74,5 +89,3 @@ private:
 
 	linalg::vec3f m_position;
 };
-
-#endif

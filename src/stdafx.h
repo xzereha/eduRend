@@ -13,7 +13,6 @@
 #define SAFE_RELEASE(x) if( x ) { (x)->Release(); (x) = nullptr; }
 #define SAFE_DELETE(x) if( x ) { delete(x); (x) = nullptr; }
 #define SAFE_DELETE_ARRAY(x) if( x ) { delete[](x); (x) = nullptr; }
-constexpr auto PI = (3.14159265358979323846f);
 
 #define ASSERT(x) if(FAILED(x)) { __debugbreak(); }
 
